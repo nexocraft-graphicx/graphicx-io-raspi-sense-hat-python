@@ -22,7 +22,7 @@ with open(config_file_path) as config_file:
     format_id = config_data["format_id"]
     compression_id = config_data["compression_id"]
     mqtt_broker_host = config_data["mqtt_broker_host"]
-    mqtt_broker_port = config_data["mqtt_broker_port"]
+    mqtt_broker_port = int(config_data["mqtt_broker_port"])
     mqtt_client_username = config_data["mqtt_client_username"]
     mqtt_client_password = config_data["mqtt_client_password"]
 
