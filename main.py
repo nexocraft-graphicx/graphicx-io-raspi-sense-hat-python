@@ -198,7 +198,7 @@ def main():
         "format_id = " + format_id + "\n" +
         "compression_id = " + compression_id + "\n" +
         "mqtt_broker_host = " + mqtt_broker_host + "\n" +
-        "mqtt_broker_port = " + mqtt_broker_port + "\n" +
+        "mqtt_broker_port = " + str(mqtt_broker_port) + "\n" +
         "mqtt_client_username = " + mqtt_client_username + "\n"
     )
     connect_mqtt()
