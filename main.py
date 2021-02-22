@@ -21,7 +21,8 @@ with open(config_file_path) as config_file:
     device_identifier = config_data["device_identifier"]
     format_id = config_data["format_id"]
     compression_id = config_data["compression_id"]
-    mqtt_broker_url = config_data["mqtt_broker_url"]
+    mqtt_broker_host = config_data["mqtt_broker_host"]
+    mqtt_broker_port = config_data["mqtt_broker_port"]
     mqtt_client_username = config_data["mqtt_client_username"]
     mqtt_client_password = config_data["mqtt_client_password"]
 
@@ -70,7 +71,8 @@ def connect_mqtt():
         mqttc.username_pw_set(mqtt_client_username, mqtt_client_password)
         mqttc.reconnect_delay_set(1, 60)
         print("Connecting to MQTT Client...")
-        mqttc.connect(mqtt_broker_url, 51883, 60)
+        mqttc.connect(mqtt_broker_host, mqtt_broker_port, 60)
+        mqttc.tls_insecure_set(True)
         mqttc.loop_start()
     except:
         raise ValueError(
@@ -195,7 +197,8 @@ def main():
         "device_identifier = " + device_identifier + "\n" +
         "format_id = " + format_id + "\n" +
         "compression_id = " + compression_id + "\n" +
-        "mqtt_broker_url = " + mqtt_broker_url + "\n" +
+        "mqtt_broker_host = " + mqtt_broker_host + "\n" +
+        "mqtt_broker_port = " + mqtt_broker_port + "\n" +
         "mqtt_client_username = " + mqtt_client_username + "\n"
     )
     connect_mqtt()
