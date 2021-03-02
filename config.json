@@ -1,0 +1,10 @@
+{
+    "tenant_identifier" : "<<insert tenant_identifier>>",
+    "device_identifier" : "<<insert device_identifier>>",
+    "format_id" : "<<insert format_id>>", 
+    "compression_id" : "<<insert compression_id>>",                                     
+    "mqtt_broker_host" : "<<insert mqtt_broker_host>>",
+    "mqtt_broker_port" : "<<insert mqtt_broker_port>>",
+    "mqtt_client_username" : "<<insert mqtt_client_username>>",
+    "mqtt_client_password" : "<<insert mqtt_client_password>>"
+}
