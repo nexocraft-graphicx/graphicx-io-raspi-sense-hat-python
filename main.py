@@ -4,8 +4,12 @@ import os.path
 import threading
 import time
 
-import paho.mqtt.client as mqtt
 from sense_hat import SenseHat
+
+import paho.mqtt.client as mqtt
+
+mqttc = mqtt.Client("raspidemo1_localwithmockedsensehat", True, None, mqtt.MQTTv311, "tcp")
+#mqttc = mqtt.Client("raspidemo1_localwithmockedsensehat", None, None, mqtt.MQTTv5, "tcp")
 
 # ----- Configuration -----
 
@@ -67,12 +71,20 @@ def on_log(client, obj, level, string):
 # MQTT
 def connect_mqtt():
     try:
-        print("Initialise MQTT Client...")
+        print("Configuring MQTT Client...")
+
+        # this makes the MQTT Client behave like a web browser regarding TLS
+        # see paho API documentation for details
+        # https://www.eclipse.org/paho/index.php?page=clients/python/docs/index.php
+        mqttc.tls_set(None, None, None, mqtt.ssl.CERT_REQUIRED, mqtt.ssl.PROTOCOL_TLSv1_2, None)
+        mqttc.tls_insecure_set(False)
+
         mqttc.username_pw_set(mqtt_client_username, mqtt_client_password)
         mqttc.reconnect_delay_set(1, 60)
+        mqttc.message_retry_set(10)
+
         print("Connecting to MQTT Client...")
-        mqttc.connect(mqtt_broker_host, mqtt_broker_port, 60)
-        mqttc.tls_insecure_set(True)
+        mqttc.connect_async(mqtt_broker_host, mqtt_broker_port, 30)
         mqttc.loop_start()
     except:
         raise ValueError(
@@ -80,6 +92,7 @@ def connect_mqtt():
 
 
 def disconnect_mqtt():
+    mqttc.loop_stop()
     mqttc.disconnect()
 
 
@@ -94,7 +107,7 @@ def timer_measurement():
         while True: time.sleep(100)
     except (KeyboardInterrupt, SystemExit):
         disconnect_mqtt()
-        print("Received keyboard interrupt (Ctrl+C). Disconnect MQTT server and quitting.")
+        print("Stopping loop, disconnecting from MQTT server and quitting.")
 
 
 # ----- Functions -----
@@ -144,7 +157,7 @@ def send_measurements(time_epochmillis, temperature_value, relative_humidity_val
 
 def create_topic_name():
     topic = (
-            "tenant/$" + tenant_identifier + "/ts/in/$" + device_identifier
+            "tenant/" + tenant_identifier + "/ts/in/" + device_identifier
     )
     return topic
 
