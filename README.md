@@ -103,6 +103,14 @@ The default user is `pi`and the default password is `raspberry` (you should chan
 The following picture shows an example of a screen after login via SSH, in this case under Windows 10: 
 ![rasp_10](images/rasp_10.JPG)
 
+## Hints to optimize a Raspberry Pi 4 for 24/7 operation
+
+In the Internet you can find various hints to optimize a Raspberry Pi 4 for 24/7 operation. Here, we give you some hints. Regarding how to achieve each of these, please search for articles on the Internet.
+
+- To reduce disk wear disable swapping in the OS.
+- To reduce disk wear map /var/log and similar locations to a temporary file system (tmpfs) or a RAM-disk file system (ramfs).
+- Activate the watchdog.
+
 ## Setup python Environment
 
 To use the example you need to install following packages:
@@ -202,3 +210,21 @@ python main.py
 ```
 
 The script will start to connect and send data.
+
+## Run this as a service
+
+We prepared for you the file ./runasservice/senddataviamqtt.service which you may consider adjusting and copying as mentioned in [this official article](https://www.raspberrypi.org/documentation/linux/usage/systemd.md):
+
+`sudo cp senddataviamqtt.service /etc/systemd/system/senddataviamqtt.service`
+
+Once copied, you can attempt to start the service using the following command:
+
+`sudo systemctl start senddataviamqtt.service`
+
+Stop it with:
+
+`sudo systemctl stop senddataviamqtt.service`
+
+When this has worked and you are happy, you can have it start automatically on reboot by using this command:
+
+`sudo systemctl enable senddataviamqtt.service`
