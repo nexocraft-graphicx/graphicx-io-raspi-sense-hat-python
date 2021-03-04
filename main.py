@@ -8,8 +8,10 @@ from sense_hat import SenseHat
 
 import paho.mqtt.client as mqtt
 
-mqttc = mqtt.Client("raspidemo1_localwithmockedsensehat", True, None, mqtt.MQTTv311, "tcp")
-# mqttc = mqtt.Client("raspidemo1_localwithmockedsensehat", None, None, mqtt.MQTTv5, "tcp")
+# ----- Sense Hat -----
+
+sense = SenseHat()
+sense.clear()
 
 # ----- Configuration -----
 
@@ -29,8 +31,12 @@ with open(config_file_path) as config_file:
     mqtt_broker_port = int(config_data["mqtt_broker_port"])
     mqtt_client_username = config_data["mqtt_client_username"]
     mqtt_client_password = config_data["mqtt_client_password"]
+    mqtt_client_id = config_data["mqtt_client_id"]
 
 # ----- MQTT Client -----
+
+mqttc = mqtt.Client(mqtt_client_id, True, None, mqtt.MQTTv311, "tcp")
+# mqttc = mqtt.Client("raspidemo1_mqtt_client", None, None, mqtt.MQTTv5, "tcp")
 
 connection_status = [
     "Connection successful",
@@ -92,22 +98,29 @@ def connect_mqtt():
 
 
 def disconnect_mqtt():
+    print("If not yet done stopping MQTT Client gracefully.")
     mqttc.loop_stop()
     mqttc.disconnect()
 
 
+mqttc.on_connect = on_connect
+mqttc.on_disconnect = on_disconnect
+mqttc.on_publish = on_publish
+mqttc.on_log = on_log
+
 # ----- Timer for regularly measuring and sending values to graphicx.io -----
 
-def timer_measurement():
+def our_loop_in_one_thread():
     try:
-        thread = threading.Timer(3, timer_measurement)
-        thread.daemon = True
-        thread.start()
-        take_and_send_measurements()
-        while True: time.sleep(100)
+        next_call = time.time()
+        while True:
+            take_and_send_measurements()
+            next_call = next_call + 5
+            time.sleep(next_call - time.time())
     except (KeyboardInterrupt, SystemExit):
+        print("KeyboardInterrupt or SystemExit caught in our loop.")
+    finally:
         disconnect_mqtt()
-        print("Stopping loop, disconnecting from MQTT server and quitting.")
 
 
 # ----- Functions -----
@@ -117,10 +130,13 @@ def take_and_send_measurements():
     # see https://pythonhosted.org/sense-hat/api/#environmental-sensors
     # degrees Celsius
     temperature_value = sense.get_temperature()
+#    temperature_value = 22.22
     # RH percentage
     relative_humidity_value = sense.get_humidity()
+#    relative_humidity_value = 44.44
     # Millibars
     pressure_value = sense.get_pressure()
+#    pressure_value = 1111.11
     send_measurements(time_epochmillis, temperature_value, relative_humidity_value, pressure_value)
 
 
@@ -187,44 +203,45 @@ def create_json_payload_dict(time_epochmillis, temperature_value, relative_humid
         add_float_series_point_to_json_data_dict(data_dict, '3', pressure_value, time_epochmillis)
         payload_dict = {'data': data_dict}
         payload_json = json.dumps(payload_dict)
-# if this would not use the simple default payload format (see graphicx.io quickstart)
-# the following would be done to include a format_if and a compression_id
-# moreover with MQTT v5 these would become custom headers on the MQTT message
-#        payload = bytes.fromhex(format_id) + bytes.fromhex(compression_id) + bytearray(payload_json, "utf8")
+        # if this would not use the simple default payload format (see graphicx.io quickstart)
+        # the following would be done to include a format_if and a compression_id
+        # moreover with MQTT v5 these would become custom headers on the MQTT message
+        #        payload = bytes.fromhex(format_id) + bytes.fromhex(compression_id) + bytearray(payload_json, "utf8")
         payload = bytearray(payload_json, "utf8")
-    except:
-        raise ValueError("Payload creation failed (JSON)")
+    finally:
+        print("Payload creation failed (JSON)")
     return payload
 
 
-# Sense Hat
-sense = SenseHat()
-sense.clear()
-
-# MQTT client
-mqttc = mqtt.Client()
-mqttc.on_connect = on_connect
-mqttc.on_disconnect = on_disconnect
-mqttc.on_publish = on_publish
-mqttc.on_log = on_log
-
-
 def main():
-    print(
-        "Example grapicx.io IoT platform\n\n"
-        "tenant_identifier = " + tenant_identifier + "\n" +
-        "device_identifier = " + device_identifier + "\n" +
-        "format_id = " + format_id + "\n" +
-        "compression_id = " + compression_id + "\n" +
-        "mqtt_broker_host = " + mqtt_broker_host + "\n" +
-        "mqtt_broker_port = " + str(mqtt_broker_port) + "\n" +
-        "mqtt_client_username = " + mqtt_client_username + "\n"
-    )
-    connect_mqtt()
-    while (connection_code != 0):
-        pass
-    print("\nStart transmission. Exit with Ctrl+C")
-    timer_measurement()
+    try:
+        print(
+            "Example grapicx.io IoT platform\n\n"
+            "tenant_identifier = " + tenant_identifier + "\n" +
+            "device_identifier = " + device_identifier + "\n" +
+            "format_id = " + format_id + "\n" +
+            "compression_id = " + compression_id + "\n" +
+            "mqtt_broker_host = " + mqtt_broker_host + "\n" +
+            "mqtt_broker_port = " + str(mqtt_broker_port) + "\n" +
+            "mqtt_client_username = " + mqtt_client_username + "\n"
+            "mqtt_client_id = " + mqtt_client_id + "\n"
+        )
+        connect_mqtt()
+        if (connection_code != 0):
+            pass
+
+        timer_thread = threading.Thread(target=our_loop_in_one_thread)
+        timer_thread.daemon = True
+        timer_thread.start()
+
+        while True:
+            time.sleep(1000)
+    except (KeyboardInterrupt, SystemExit):
+        print("KeyboardInterrupt or SystemExit caught in main.")
+        disconnect_mqtt()
+    finally:
+        print("Exiting from main.")
+        disconnect_mqtt()
 
 
 if __name__ == "__main__":
