@@ -9,7 +9,7 @@ from sense_hat import SenseHat
 import paho.mqtt.client as mqtt
 
 mqttc = mqtt.Client("raspidemo1_localwithmockedsensehat", True, None, mqtt.MQTTv311, "tcp")
-#mqttc = mqtt.Client("raspidemo1_localwithmockedsensehat", None, None, mqtt.MQTTv5, "tcp")
+# mqttc = mqtt.Client("raspidemo1_localwithmockedsensehat", None, None, mqtt.MQTTv5, "tcp")
 
 # ----- Configuration -----
 
@@ -129,16 +129,17 @@ def send_measurements(time_epochmillis, temperature_value, relative_humidity_val
         topic = create_topic_name()
         payload = create_json_payload_dict(time_epochmillis, temperature_value, relative_humidity_value, pressure_value)
         print(
-            "\nTemperature " + (str(temperature_value)) + " Humidity " + (
-                str(relative_humidity_value)) + " (Exit with Ctrl+C)" +
-            "\nMQTT topic: " + topic +
-            "\nBinary payload: " + str(payload)
+            "\nTemperature " + (str(temperature_value))
+            + " Humidity " + (str(relative_humidity_value))
+            + " Pressure " + (str(pressure_value))
         )
         mqttc.publish(topic=topic, payload=payload, qos=1, retain=False)
     else:
         print(
-            "\nMQTT Server disconnected, can´t send data: " + connection_status[connection_code] +
-            "\nTemperature " + (str(temperature_value)) + " Humidity " + (str(relative_humidity_value))
+            "\nMQTT Server disconnected, can´t send data: " + connection_status[connection_code]
+            + "Temperature " + (str(temperature_value))
+            + " Humidity " + (str(relative_humidity_value))
+            + " Pressure " + (str(pressure_value))
         )
 
 
@@ -159,6 +160,7 @@ def create_topic_name():
     topic = (
             "tenant/" + tenant_identifier + "/ts/in/" + device_identifier
     )
+    print("\nMQTT topic: " + topic)
     return topic
 
 
