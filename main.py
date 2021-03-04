@@ -227,6 +227,7 @@ def main():
             "mqtt_client_id = " + mqtt_client_id + "\n"
         )
         connect_mqtt()
+        time.sleep(5)
         if (connection_code != 0):
             pass
 
@@ -235,7 +236,7 @@ def main():
         timer_thread.start()
 
         while True:
-            time.sleep(1000)
+            time.sleep(10)
     except (KeyboardInterrupt, SystemExit):
         print("KeyboardInterrupt or SystemExit caught in main.")
         disconnect_mqtt()
