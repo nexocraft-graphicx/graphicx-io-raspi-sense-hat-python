@@ -65,7 +65,8 @@ def on_publish(client, obj, mid):
 
 
 def on_log(client, obj, level, string):
-    print("Log: " + string)
+    if (connection_code != 0):
+        print("Log: " + string)
 
 
 # MQTT
@@ -128,11 +129,11 @@ def send_measurements(time_epochmillis, temperature_value, relative_humidity_val
     if (connection_code == 0):
         topic = create_topic_name()
         payload = create_json_payload_dict(time_epochmillis, temperature_value, relative_humidity_value, pressure_value)
-        print(
-            "\nTemperature " + (str(temperature_value))
-            + " Humidity " + (str(relative_humidity_value))
-            + " Pressure " + (str(pressure_value))
-        )
+        #        print(
+        #            "\nTemperature " + (str(temperature_value))
+        #            + " Humidity " + (str(relative_humidity_value))
+        #            + " Pressure " + (str(pressure_value))
+        #        )
         mqttc.publish(topic=topic, payload=payload, qos=1, retain=False)
     else:
         print(
@@ -160,7 +161,7 @@ def create_topic_name():
     topic = (
             "tenant/" + tenant_identifier + "/ts/in/" + device_identifier
     )
-    print("\nMQTT topic: " + topic)
+    #    print("\nMQTT topic: " + topic)
     return topic
 
 
