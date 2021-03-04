@@ -191,8 +191,11 @@ The little script (config.py) will ask you for following parameters and adjusts 
 - MQTT Broker Port
 - MQTT username
 - MQTT password
+- MQTT Client ID
 
 If you are not yet familiar with these parameters please read the [Quickstart Guide of graphicx.io](https://helpcenter.graphicx.io/en/support/solutions/79000057338).
+
+The MQTT Client ID is usually a unique ID per IoT Device in case there is only one MQTT Client on the Device.
 
 Note: If the configuration file does not yet exist, it will be created. If it already exists, each current value will be presented and you will be asked if you want to keep or change it. 
 
