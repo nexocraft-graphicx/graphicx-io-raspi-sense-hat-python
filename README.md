@@ -109,6 +109,7 @@ In the Internet you can find various hints to optimize a Raspberry Pi 4 for 24/7
 
 - To reduce disk wear disable swapping in the OS.
 - To reduce disk wear map /var/log and similar locations to a temporary file system (tmpfs) or a RAM-disk file system (ramfs).
+- To reduce disk wear configure the system.d service journal to be volatile which in this case means in-memory. 
 - Activate the watchdog.
 
 ## Setup python Environment
@@ -213,6 +214,8 @@ The script will start to connect and send data.
 
 ## Run this as a service
 
+This here is based on systemd and it can be compared to running a container in Docker.
+
 We prepared for you the file ./runasservice/senddataviamqtt.service which you may consider adjusting and copying as mentioned in [this official article](https://www.raspberrypi.org/documentation/linux/usage/systemd.md):
 
 `sudo cp senddataviamqtt.service /etc/systemd/system/senddataviamqtt.service`
@@ -220,6 +223,14 @@ We prepared for you the file ./runasservice/senddataviamqtt.service which you ma
 Once copied, you can attempt to start the service using the following command:
 
 `sudo systemctl start senddataviamqtt.service`
+
+See its status with:
+
+`systemctl status senddataviamqtt.service`
+
+See not only a part, but all of its available output, so to say its logging output that it writes to stdout and strerr:
+
+`journalctl -u senddataviamqtt.service`
 
 Stop it with:
 
