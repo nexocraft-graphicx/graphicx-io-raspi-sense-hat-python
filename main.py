@@ -227,7 +227,7 @@ def main():
             "mqtt_client_id = " + mqtt_client_id + "\n"
         )
         connect_mqtt()
-        time.sleep(5)
+        time.sleep(10)
         if (connection_code != 0):
             pass
 
