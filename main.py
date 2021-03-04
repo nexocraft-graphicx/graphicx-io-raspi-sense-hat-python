@@ -108,6 +108,7 @@ mqttc.on_disconnect = on_disconnect
 mqttc.on_publish = on_publish
 mqttc.on_log = on_log
 
+
 # ----- Timer for regularly measuring and sending values to graphicx.io -----
 
 def our_loop_in_one_thread():
@@ -115,7 +116,7 @@ def our_loop_in_one_thread():
         next_call = time.time()
         while True:
             take_and_send_measurements()
-            next_call = next_call + 5
+            next_call = next_call + 30
             time.sleep(next_call - time.time())
     except (KeyboardInterrupt, SystemExit):
         print("KeyboardInterrupt or SystemExit caught in our loop.")
