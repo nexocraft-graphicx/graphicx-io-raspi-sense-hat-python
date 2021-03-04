@@ -187,7 +187,11 @@ def create_json_payload_dict(time_epochmillis, temperature_value, relative_humid
         add_float_series_point_to_json_data_dict(data_dict, '3', pressure_value, time_epochmillis)
         payload_dict = {'data': data_dict}
         payload_json = json.dumps(payload_dict)
-        payload = bytes.fromhex(format_id) + bytes.fromhex(compression_id) + bytearray(payload_json, "utf8")
+# if this would not use the simple default payload format (see graphicx.io quickstart)
+# the following would be done to include a format_if and a compression_id
+# moreover with MQTT v5 these would become custom headers on the MQTT message
+#        payload = bytes.fromhex(format_id) + bytes.fromhex(compression_id) + bytearray(payload_json, "utf8")
+        payload = bytearray(payload_json, "utf8")
     except:
         raise ValueError("Payload creation failed (JSON)")
     return payload
