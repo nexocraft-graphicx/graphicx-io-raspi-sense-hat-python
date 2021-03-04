@@ -65,8 +65,7 @@ def on_publish(client, obj, mid):
 
 
 def on_log(client, obj, level, string):
-    if (connection_code != 0):
-        print("Log: " + string)
+    print("Log: " + string)
 
 
 # MQTT
