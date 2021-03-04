@@ -49,7 +49,7 @@ def write_config(config):
     data = {}
     data['tenant_identifier'] = config["tenant_identifier"]
     data['device_identifier'] = config["device_identifier"]
-    data['format_id'] = "12"
+    data['format_id'] = "17"
     data['compression_id'] = "02"
     data['mqtt_broker_host'] = config["mqtt_broker_host"]
     data['mqtt_broker_port'] = config["mqtt_broker_port"]
