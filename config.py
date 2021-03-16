@@ -75,8 +75,8 @@ def show_config(config):
 
 
 def main():
-    print("\nIn the following you can add all important credetials" +
-          " to the local cofiguration file for the sample application:\n")
+    print("\nIn the following you can add all important credentials" +
+          " to the local configuration file for the sample application:\n")
 
     select = "change"
     while (select == "change"):
