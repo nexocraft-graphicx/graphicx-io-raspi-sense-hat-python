@@ -12,7 +12,7 @@ npcoloryellow = np.array([130, 141, 52])
 nplit = (npcolor2 - 8).clip(min=0)
 npdimmed = (npcolor3 - 64).clip(min=10)
 npvague = (npcolor4 - 8).clip(min=10)
-npdark = np.subtract(npcolor5, np.array([18, 20, 22])).clip(min=10)
+npdark = np.subtract(npcolor5, np.array([20, 24, 30])).clip(min=10)
 npred = npcolorred
 npyellow = npcoloryellow
 
@@ -25,11 +25,11 @@ yellow = npyellow.tolist()
 
 
 def the_x_lit(sense):
-    internal_draw(sense, dark, lit)
+    internal_guarded_draw(sense, dark, lit)
 
 
 def the_x_dimmed(sense):
-    internal_draw(sense, dark, dimmed)
+    internal_guarded_draw(sense, dark, dimmed)
 
 
 def the_x_vague(sense):
@@ -42,6 +42,14 @@ def the_x_in_red(sense):
 
 def the_x_in_yellow(sense):
     internal_draw(sense, dark, yellow)
+
+
+def internal_guarded_draw(sense, o, X):
+    north = sense.get_compass()
+    if(-5.0 <= north <= 5.0):
+        internal_draw(sense, o, X)
+    else:
+        sense.clear()
 
 
 def internal_draw(sense, o, X):
