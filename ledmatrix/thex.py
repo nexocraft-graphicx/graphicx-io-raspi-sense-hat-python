@@ -14,11 +14,11 @@ npdark = npcolor5
 npred = npcolorred
 npyellow = npcoloryellow
 
-lit = nplit.asarray
-dimmed = npcolor3.asarray
-dark = npdark.asarray
-red = npred.asarray
-yellow = npyellow.asarray
+lit = nplit.tolist()
+dimmed = npcolor3.tolist()
+dark = npdark.tolist()
+red = npred.tolist()
+yellow = npyellow.tolist()
 
 
 def the_x_lit(sense):
