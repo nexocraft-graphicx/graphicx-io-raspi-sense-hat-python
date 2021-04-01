@@ -14,7 +14,6 @@ from ledmatrix import thex
 # ----- Sense Hat -----
 
 sense = SenseHat()
-sense.clear()
 
 # ----- Configuration -----
 
@@ -136,6 +135,8 @@ def our_loop_in_one_thread():
         raise
     finally:
         disconnect_mqtt()
+        time.sleep(7)
+        thex.the_x_off(sense)
 
 
 # ----- Functions -----
@@ -143,6 +144,10 @@ def our_loop_in_one_thread():
 
 
 def main():
+    time.sleep(1)
+    thex.the_x_off(sense)
+    time.sleep(1)
+    thex.the_x_wiped(sense)
     try:
         print(
             "Example grapicx.io IoT platform\n\n"
@@ -157,6 +162,7 @@ def main():
         )
         connect_mqtt()
         time.sleep(10)
+        thex.the_x_in_yellow(sense)
         if (connection_code != 0):
             pass
 
@@ -176,6 +182,8 @@ def main():
     finally:
         print("Exiting from main.")
         disconnect_mqtt()
+        time.sleep(7)
+        thex.the_x_off(sense)
 
 
 if __name__ == "__main__":
