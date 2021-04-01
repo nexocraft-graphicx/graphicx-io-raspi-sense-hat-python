@@ -166,7 +166,7 @@ def main():
             pass
 
         thex.the_x_vague(sense)
-        time.sleep(3)
+        time.sleep(10)
         timer_thread = threading.Thread(target=our_loop_in_one_thread)
         timer_thread.daemon = True
         timer_thread.start()
@@ -183,7 +183,9 @@ def main():
     finally:
         print("Exiting from main.")
         disconnect_mqtt()
-        time.sleep(7)
+        time.sleep(10)
+        thex.the_x_vague(sense)
+        time.sleep(10)
         thex.the_x_off(sense)
 
 
