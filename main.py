@@ -96,6 +96,7 @@ def connect_mqtt():
         mqttc.connect_async(mqtt_broker_host, mqtt_broker_port, 30)
         mqttc.loop_start()
     except:
+        thex.the_x_in_red(sense)
         raise ValueError(
             "Not able to initiate MQTT connection. Please check format of login parameters incl. server URL.")
 
@@ -119,16 +120,20 @@ def our_loop_in_one_thread():
         # time.time() returns EpochSeconds
         next_call = time.time()
         while True:
-            thex.wipe_the_x(sense)
+            thex.the_x_lit(sense)
             ambience.take_and_send_measurements(sense, connection_status, connection_code, mqttc, tenant_identifier, device_identifier)
             time.sleep(5)
             # next call in 30 seconds
             next_call = next_call + 30
             seconds_to_sleep = max(0.0, next_call - time.time())
-            thex.draw_the_x(sense)
+            thex.the_x_dimmed(sense)
             time.sleep(seconds_to_sleep)
     except (KeyboardInterrupt, SystemExit):
+        thex.the_x_in_yellow(sense)
         print("KeyboardInterrupt or SystemExit caught in our loop.")
+    except:
+        thex.the_x_in_red(sense)
+        raise
     finally:
         disconnect_mqtt()
 
@@ -162,8 +167,12 @@ def main():
         while True:
             time.sleep(10)
     except (KeyboardInterrupt, SystemExit):
+        thex.the_x_in_yellow(sense)
         print("KeyboardInterrupt or SystemExit caught in main.")
         disconnect_mqtt()
+    except:
+        thex.the_x_in_red(sense)
+        raise
     finally:
         print("Exiting from main.")
         disconnect_mqtt()
