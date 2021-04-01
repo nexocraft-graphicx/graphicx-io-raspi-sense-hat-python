@@ -1,6 +1,6 @@
 import json
 import time
-
+from ledmatrix import thex
 
 def take_and_send_measurements(sense, connection_status, connection_code, mqttc, tenant_identifier, device_identifier):
     time_epochmillis = int(time.time() * 1000)
@@ -14,13 +14,13 @@ def take_and_send_measurements(sense, connection_status, connection_code, mqttc,
     # Millibars
     pressure_value = sense.get_pressure()
     #    pressure_value = 1111.11
-    send_measurements(connection_status, connection_code, mqttc, tenant_identifier, device_identifier, time_epochmillis, temperature_value, relative_humidity_value, pressure_value)
+    send_measurements(sense, connection_status, connection_code, mqttc, tenant_identifier, device_identifier, time_epochmillis, temperature_value, relative_humidity_value, pressure_value)
 
 
-def send_measurements(connection_status, connection_code, mqttc, tenant_identifier, device_identifier, time_epochmillis, temperature_value, relative_humidity_value, pressure_value):
+def send_measurements(sense, connection_status, connection_code, mqttc, tenant_identifier, device_identifier, time_epochmillis, temperature_value, relative_humidity_value, pressure_value):
     if (connection_code == 0):
         topic = create_topic_name(tenant_identifier, device_identifier)
-        payload = create_json_payload_dict(time_epochmillis, temperature_value, relative_humidity_value, pressure_value)
+        payload = create_json_payload_dict(sense, time_epochmillis, temperature_value, relative_humidity_value, pressure_value)
         #        print(
         #            "\nTemperature " + (str(temperature_value))
         #            + " Humidity " + (str(relative_humidity_value))
@@ -58,7 +58,7 @@ def add_float_series_point_to_json_data_dict(data_dict, channel, value, time_epo
     return data_dict
 
 
-def create_json_payload_dict(time_epochmillis, temperature_value, relative_humidity_value, pressure_value):
+def create_json_payload_dict(sense, time_epochmillis, temperature_value, relative_humidity_value, pressure_value):
     # function for using JSON format TsChannelsFloatSeriesJSON
     try:
         data_dict = initialise_json_data_dict()
@@ -72,6 +72,7 @@ def create_json_payload_dict(time_epochmillis, temperature_value, relative_humid
         # moreover with MQTT v5 these would become custom headers on the MQTT message
         #        payload = bytes.fromhex(format_id) + bytes.fromhex(compression_id) + bytearray(payload_json, "utf8")
         payload = bytearray(payload_json, "utf8")
-    finally:
-        pass
+    except:
+        thex.the_x_in_red(sense)
+        raise
     return payload
