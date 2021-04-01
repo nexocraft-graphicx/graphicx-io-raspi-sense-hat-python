@@ -4,18 +4,21 @@ import numpy as np
 
 npcolor2 = np.array([0, 208, 193])
 npcolor3 = np.array([130, 141, 152])
+npcolor4 = np.array([79, 91, 102])
 npcolor5 = np.array([59, 71, 82])
 npcolorred = np.array([130, 41, 52])
 npcoloryellow = np.array([130, 141, 52])
 
 nplit = npcolor2
 npdimmed = npcolor3
-npdark = npcolor5
+npvague = npcolor4
+npdark = (npcolor5 - 20).clip(min=0)
 npred = npcolorred
 npyellow = npcoloryellow
 
 lit = nplit.tolist()
-dimmed = npcolor3.tolist()
+dimmed = npdimmed.tolist()
+vague = npvague.tolist()
 dark = npdark.tolist()
 red = npred.tolist()
 yellow = npyellow.tolist()
@@ -27,6 +30,10 @@ def the_x_lit(sense):
 
 def the_x_dimmed(sense):
     internal_draw(sense, dark, dimmed)
+
+
+def the_x_vague(sense):
+    internal_draw(sense, dark, vague)
 
 
 def the_x_in_red(sense):

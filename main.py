@@ -146,7 +146,7 @@ def our_loop_in_one_thread():
 def main():
     time.sleep(1)
     thex.the_x_off(sense)
-    time.sleep(1)
+    time.sleep(2)
     thex.the_x_wiped(sense)
     try:
         print(
@@ -162,10 +162,11 @@ def main():
         )
         connect_mqtt()
         time.sleep(10)
-        thex.the_x_in_yellow(sense)
         if (connection_code != 0):
             pass
 
+        thex.the_x_vague(sense)
+        time.sleep(3)
         timer_thread = threading.Thread(target=our_loop_in_one_thread)
         timer_thread.daemon = True
         timer_thread.start()
