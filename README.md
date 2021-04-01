@@ -23,11 +23,15 @@ That´s it!
 
 ![pic1](images/pic_1_new.jpg)
 
-## Note regarding Raspberry Pi in combination with the Sense HAT extension
+## Booting Raspberry Pi 4 with Sense HAT successfully
 
-The Raspberry Pi may not boot up when the Sense HAT is mounted. You need to make following changes to avoid this bug: 
+The Raspberry Pi 4 may not boot up when the Sense HAT is mounted. You need to make following changes to avoid this situation: 
 
-In the root path of the RaspberryPi´s sd-card you need to adjust the `config.text` file. Search for:
+In the boot path of the sd-card you need to adjust the `config.txt` file.
+It is typically located at `/boot/config.txt` and is usually writeable.
+Note the official tool `raspi-config` also alters this file and via this tool the file might even have been set to read-only. You can use the tool to make it writeable again.
+
+In the file look for:
 
 ```
 # hdmi_force_hotplug=1
@@ -39,9 +43,13 @@ The only thing you have to do is uncomment this line to:
 hdmi_force_hotplug=1
 ```
 
-Now you can mount the Sense HAT and the Raspberry Pi OS will boot up. 
+Now you can mount the Sense HAT and the Raspberry Pi OS should boot.
 
-In addition, when using an RaspberryPi 4 in combination with a Sense HAT mounted on top, the temperature values will also be influenced from the temperature of the more powerful CPU of the PI 4.
+Why is that? Let us cite an official article. "If you are working headless then please note that per default the RPI4 no longer creates a video output display, as a RPI4 no longer switches to Composite when it doesn't detect a HDMI device, so a /dev/fbN frame buffer node is not created." However, the Sense HAT needs such a frame buffer to work. Forcing the HDMI hotplug option makes the Raspberry Pi 4 create such a frame buffer anyways so that it is ready should an HDMI cable get plugged in hot. In this case we benefit from this behavior for integrating the Sense HAT successfully.
+
+## Sense HAT and the temperature measurements
+
+When using an Raspberry Pi 4 in combination with a Sense HAT mounted on top, the temperature values will be influenced from the temperature of the more powerful CPU of the PI 4. People consider subtracting some static or dynamic offset.
 
 ## Set up a Raspberry Pi in headless mode
 
