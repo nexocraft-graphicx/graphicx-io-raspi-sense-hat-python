@@ -53,6 +53,8 @@ def the_x_in_yellow(sense):
 def internal_guarded_draw(sense, o, X):
     north = sense.get_compass()
     print("north=" + str(north) + "\n")
+    orientation = sense.get_orientation_degrees()
+    print("p: {pitch}, r: {roll}, y: {yaw}".format(**orientation))
     if (-5.0 <= north <= 5.0):
         internal_draw(sense, o, X)
     else:
