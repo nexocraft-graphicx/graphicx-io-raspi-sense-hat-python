@@ -119,6 +119,7 @@ def our_loop_in_one_thread():
     try:
         # time.time() returns EpochSeconds
         next_call = time.time()
+        sense.set_imu_config(True, False, False)
         while True:
             thex.the_x_lit(sense)
             ambience.take_and_send_measurements(sense, connection_status, connection_code, mqttc, tenant_identifier,
@@ -151,6 +152,8 @@ def our_loop_in_one_thread():
 def main():
     time.sleep(1)
     thex.the_x_off(sense)
+    sense.set_imu_config(True, False, False)
+    time.sleep(1)
     sense.get_compass()
     time.sleep(2)
     thex.the_x_wiped(sense)
