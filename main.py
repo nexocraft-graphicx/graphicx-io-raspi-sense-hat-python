@@ -152,6 +152,8 @@ def our_loop_in_one_thread():
 def main():
     time.sleep(1)
     thex.the_x_off(sense)
+    sense.low_light = True
+    time.sleep(2)
     sense.set_imu_config(True, False, False)
     time.sleep(1)
     sense.get_compass()
