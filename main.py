@@ -3,6 +3,7 @@ import json
 import os.path
 import threading
 import time
+import sys
 
 from sense_hat import SenseHat
 
@@ -137,6 +138,7 @@ def our_loop_in_one_thread():
         disconnect_mqtt()
         time.sleep(7)
         thex.the_x_off(sense)
+        sys.exit(1)
 
 
 # ----- Functions -----
