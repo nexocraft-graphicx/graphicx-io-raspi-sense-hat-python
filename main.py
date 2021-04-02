@@ -3,7 +3,7 @@ import json
 import os.path
 import threading
 import time
-import sys
+import os
 
 from sense_hat import SenseHat
 
@@ -121,28 +121,31 @@ def our_loop_in_one_thread():
         next_call = time.time()
         while True:
             thex.the_x_lit(sense)
-            ambience.take_and_send_measurements(sense, connection_status, connection_code, mqttc, tenant_identifier, device_identifier)
+            ambience.take_and_send_measurements(sense, connection_status, connection_code, mqttc, tenant_identifier,
+                                                device_identifier)
             time.sleep(5)
             # next call in 30 seconds
             next_call = next_call + 30
             seconds_to_sleep = max(0.0, next_call - time.time())
             thex.the_x_dimmed(sense)
             time.sleep(seconds_to_sleep)
-    except (KeyboardInterrupt, SystemExit):
+    except (KeyboardInterrupt):
         thex.the_x_in_yellow(sense)
-        print("KeyboardInterrupt or SystemExit caught in our loop.")
+        print("KeyboardInterrupt caught in our loop.")
+    except (SystemExit):
+        thex.the_x_in_yellow(sense)
+        print("SystemExit caught in our loop.")
+        disconnect_mqtt()
     except:
         thex.the_x_in_red(sense)
         raise
     finally:
         disconnect_mqtt()
         time.sleep(7)
-        thex.the_x_off(sense)
-        sys.exit(1)
+        os._exit(1)
 
 
 # ----- Functions -----
-
 
 
 def main():
@@ -176,9 +179,13 @@ def main():
 
         while True:
             time.sleep(10)
-    except (KeyboardInterrupt, SystemExit):
+    except (KeyboardInterrupt):
         thex.the_x_in_yellow(sense)
-        print("KeyboardInterrupt or SystemExit caught in main.")
+        print("KeyboardInterrupt caught in main.")
+        disconnect_mqtt()
+    except (SystemExit):
+        thex.the_x_in_yellow(sense)
+        print("SystemExit caught in main.")
         disconnect_mqtt()
     except:
         thex.the_x_in_red(sense)
