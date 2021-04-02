@@ -23,6 +23,8 @@ dark = npdark.tolist()
 red = npred.tolist()
 yellow = npyellow.tolist()
 
+is_red = False
+
 
 def the_x_lit(sense):
     internal_guarded_draw(sense, dark, lit)
@@ -33,21 +35,24 @@ def the_x_dimmed(sense):
 
 
 def the_x_vague(sense):
-    internal_draw(sense, dark, vague)
+    if (is_red == False):
+        internal_draw(sense, dark, vague)
 
 
 def the_x_in_red(sense):
     internal_draw(sense, dark, red)
+    is_red = True
 
 
 def the_x_in_yellow(sense):
-    internal_draw(sense, dark, yellow)
+    if (is_red == False):
+        internal_draw(sense, dark, yellow)
 
 
 def internal_guarded_draw(sense, o, X):
     north = sense.get_compass()
     print("north=" + north + "\n")
-    if(-5.0 <= north <= 5.0):
+    if (-5.0 <= north <= 5.0):
         internal_draw(sense, o, X)
     else:
         sense.clear()
@@ -68,7 +73,8 @@ def internal_draw(sense, o, X):
 
 
 def the_x_wiped(sense):
-    sense.clear(dark)
+    if (is_red == False):
+        sense.clear(dark)
 
 
 def the_x_off(sense):
