@@ -9,10 +9,11 @@ npcolor5 = np.array([59, 71, 82])
 npcolorred = np.array([130, 41, 52])
 npcoloryellow = np.array([130, 141, 52])
 
-nplit = (npcolor2 - 8).clip(min=0)
-npdimmed = (npcolor3 - 64).clip(min=10)
-npvague = (npcolor4 - 8).clip(min=10)
-npdark = np.subtract(npcolor5, np.array([20, 24, 30])).clip(min=10)
+nplit = (npcolor2 - 7).clip(min=0)
+npdimmed = (npcolor3 - 10).clip(min=10)
+npvague = (npcolor4 - 7).clip(min=10)
+#npdark = np.subtract(npcolor5, np.array([20, 24, 30])).clip(min=10)
+npdark = (npcolor5 - 7).clip(min=10)
 npred = npcolorred
 npyellow = npcoloryellow
 
