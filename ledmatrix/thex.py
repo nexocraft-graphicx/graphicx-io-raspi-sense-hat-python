@@ -33,16 +33,18 @@ is_red = False
 
 
 def the_x_lit(sense):
-    internal_guarded_draw(sense, dark, lit)
+    if (is_red == False):
+        internal_guarded_draw(sense, dark, lit)
 
 
 def the_x_dimmed(sense):
-    internal_guarded_draw(sense, dark, dimmed)
+    if (is_red == False):
+        internal_draw(sense, dark, dimmed)
 
 
 def the_x_vague(sense):
     if (is_red == False):
-        internal_draw(sense, dark, vague)
+        internal_guarded_draw(sense, dark, vague)
 
 
 def the_x_in_red(sense):
