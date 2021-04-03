@@ -13,8 +13,9 @@ npcoloryellow = np.array([130, 141, 52])
 nplit = (npcolor2 - 7).clip(min=0)
 npdimmed = (npcolor3 - 20).clip(min=10)
 npvague = (npcolor4 - 7).clip(min=10)
-#npdark = np.subtract(npcolor5, np.array([20, 24, 30])).clip(min=10)
-npdark = (npcolor5 - 20).clip(min=10)
+# npdark = np.subtract(npcolor5, np.array([20, 24, 30])).clip(min=10)
+# npdark = (npcolor5 - 20).clip(min=10)
+npdark = np.array([20, 20, 20])
 npred = npcolorred
 npyellow = npcoloryellow
 
@@ -64,7 +65,8 @@ def internal_guarded_draw(sense, o, X):
     if (-5.0 <= north <= 5.0):
         internal_draw(sense, o, X)
     else:
-        sense.clear()
+        # sense.clear()
+        internal_draw(sense, o, X)
 
 
 def internal_draw(sense, o, X):
