@@ -15,7 +15,7 @@ npdimmed = (npcolor3 - 20).clip(min=10)
 npvague = (npcolor4 - 7).clip(min=10)
 # npdark = np.subtract(npcolor5, np.array([20, 24, 30])).clip(min=10)
 # npdark = (npcolor5 - 20).clip(min=10)
-npdark = np.array([20, 20, 20])
+npdark = np.array([16, 16, 16])
 npred = npcolorred
 npyellow = npcoloryellow
 
