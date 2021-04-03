@@ -178,15 +178,19 @@ def main():
         connect_mqtt()
         time.sleep(12)
         if (connection_code != 0):
-            pass
-
-        print("Starting data collection loop in another thread.\n")
-        timer_thread = threading.Thread(target=our_loop_in_one_thread)
-        timer_thread.daemon = True
-        timer_thread.start()
-
-        while True:
+            print("Could not connect to MQTT Broker within 12 seconds." +
+                  " Exiting programm so that it will be restarted.\n")
+            thex.the_x_in_red(sense)
             time.sleep(10)
+            pass
+        else:
+            print("Starting data collection loop in another thread.\n")
+            timer_thread = threading.Thread(target=our_loop_in_one_thread)
+            timer_thread.daemon = True
+            timer_thread.start()
+
+            while True:
+                time.sleep(10)
     except (KeyboardInterrupt):
         thex.the_x_in_yellow(sense)
         print("KeyboardInterrupt caught in main.")
