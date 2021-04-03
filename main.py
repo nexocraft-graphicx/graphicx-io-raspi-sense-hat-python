@@ -206,6 +206,8 @@ def main():
         print("Exiting from main.")
         disconnect_mqtt()
         time.sleep(10)
+        thex.the_x_off(sense)
+        time.sleep(1)
 
 
 if __name__ == "__main__":
