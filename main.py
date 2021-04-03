@@ -182,6 +182,8 @@ def main():
 
         thex.the_x_vague(sense)
         time.sleep(10)
+
+        print("Starting our loop in another thread.\n")
         timer_thread = threading.Thread(target=our_loop_in_one_thread)
         timer_thread.daemon = True
         timer_thread.start()
