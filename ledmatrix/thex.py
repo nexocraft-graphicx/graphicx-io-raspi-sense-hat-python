@@ -30,6 +30,7 @@ red = npred.tolist()
 yellow = npyellow.tolist()
 
 is_red = False
+use_ledmatrix = False
 
 
 def the_x_lit(sense):
@@ -39,7 +40,7 @@ def the_x_lit(sense):
 
 def the_x_dimmed(sense):
     if (is_red == False):
-        internal_draw(sense, dark, dimmed)
+        internal_guarded_draw(sense, dark, dimmed)
 
 
 def the_x_vague(sense):
@@ -48,30 +49,30 @@ def the_x_vague(sense):
 
 
 def the_x_in_red(sense):
-    internal_draw(sense, dark, red)
+    internal_guarded_draw(sense, dark, red)
     is_red = True
 
 
 def the_x_in_yellow(sense):
     if (is_red == False):
-        internal_draw(sense, dark, yellow)
+        internal_guarded_draw(sense, dark, yellow)
 
 
 def internal_guarded_draw(sense, o, X):
-    time.sleep(0.1)
-    compassraw = sense.get_compass_raw()
-    print("compassraw=" + str(compassraw) + "\n")
-    time.sleep(0.1)
-    north = sense.get_compass()
-    print("north=" + str(north) + "\n")
-    time.sleep(0.1)
-    orientation = sense.get_orientation_degrees()
-    print("p: {pitch}, r: {roll}, y: {yaw}".format(**orientation))
-    if (-5.0 <= north <= 5.0):
+    # here we tried to make drawing dependent on the orientation
+    # time.sleep(0.1)
+    # compassraw = sense.get_compass_raw()
+    # print("compassraw=" + str(compassraw) + "\n")
+    # time.sleep(0.1)
+    # north = sense.get_compass()
+    # print("north=" + str(north) + "\n")
+    # time.sleep(0.1)
+    # orientation = sense.get_orientation_degrees()
+    # print("p: {pitch}, r: {roll}, y: {yaw}".format(**orientation))
+    if (use_ledmatrix):
         internal_draw(sense, o, X)
     else:
-        # sense.clear()
-        internal_draw(sense, o, X)
+        sense.clear()
 
 
 def internal_draw(sense, o, X):
@@ -89,7 +90,7 @@ def internal_draw(sense, o, X):
 
 
 def the_x_wiped(sense):
-    if (is_red == False):
+    if (is_red == False and use_ledmatrix):
         sense.clear(dark)
 
 
