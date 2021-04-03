@@ -205,10 +205,7 @@ def main():
     finally:
         print("Exiting from main.")
         disconnect_mqtt()
-        time.sleep(6)
-        thex.the_x_vague(sense)
-        time.sleep(6)
-        thex.the_x_off(sense)
+        time.sleep(10)
 
 
 if __name__ == "__main__":
