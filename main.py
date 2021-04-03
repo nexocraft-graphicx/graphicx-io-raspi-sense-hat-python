@@ -179,7 +179,7 @@ def main():
         time.sleep(12)
         if (connection_code != 0):
             print("Could not connect to MQTT Broker within 12 seconds." +
-                  " Exiting programm so that it will be restarted.\n")
+                  " Exiting program so that it will be restarted.\n")
             thex.the_x_in_red(sense)
             time.sleep(10)
             pass
