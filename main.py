@@ -156,7 +156,11 @@ def main():
     time.sleep(2)
     sense.set_imu_config(True, True, False)
     time.sleep(1)
+    sense.get_compass_raw()
+    time.sleep(1)
     sense.get_compass()
+    time.sleep(1)
+    sense.get_orientation_degrees()
     time.sleep(2)
     thex.the_x_wiped(sense)
     try:
