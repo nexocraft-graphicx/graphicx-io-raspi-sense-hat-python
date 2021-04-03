@@ -162,7 +162,7 @@ def main():
     time.sleep(1)
     sense.get_orientation_degrees()
     time.sleep(2)
-    thex.the_x_wiped(sense)
+    thex.the_x_vague(sense)
     try:
         print(
             "Example grapicx.io IoT platform\n\n"
@@ -176,14 +176,11 @@ def main():
                                                                "mqtt_client_id = " + mqtt_client_id + "\n"
         )
         connect_mqtt()
-        time.sleep(10)
+        time.sleep(12)
         if (connection_code != 0):
             pass
 
-        thex.the_x_vague(sense)
-        time.sleep(10)
-
-        print("Starting our loop in another thread.\n")
+        print("Starting data collection loop in another thread.\n")
         timer_thread = threading.Thread(target=our_loop_in_one_thread)
         timer_thread.daemon = True
         timer_thread.start()
