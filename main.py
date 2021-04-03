@@ -128,7 +128,7 @@ def our_loop_in_one_thread():
             # next call in 30 seconds
             next_call = next_call + 30
             seconds_to_sleep = max(0.0, next_call - time.time())
-            thex.the_x_dimmed(sense)
+            thex.the_x_vague(sense)
             time.sleep(seconds_to_sleep)
     except (KeyboardInterrupt):
         thex.the_x_in_yellow(sense)
@@ -154,7 +154,7 @@ def main():
     thex.the_x_off(sense)
     sense.low_light = True
     time.sleep(2)
-    thex.the_x_vague(sense)
+    thex.the_x_dimmed(sense)
     time.sleep(2)
     sense.set_imu_config(True, True, False)
     time.sleep(1)
