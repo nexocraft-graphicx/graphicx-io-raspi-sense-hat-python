@@ -154,6 +154,8 @@ def main():
     thex.the_x_off(sense)
     sense.low_light = True
     time.sleep(2)
+    thex.the_x_vague(sense)
+    time.sleep(2)
     sense.set_imu_config(True, True, False)
     time.sleep(1)
     sense.get_compass_raw()
@@ -161,8 +163,6 @@ def main():
     sense.get_compass()
     time.sleep(1)
     sense.get_orientation_degrees()
-    time.sleep(2)
-    thex.the_x_vague(sense)
     try:
         print(
             "Example grapicx.io IoT platform\n\n"
