@@ -128,7 +128,7 @@ def our_loop_in_one_thread():
             # next call in 30 seconds
             next_call = next_call + 30
             seconds_to_sleep = max(0.0, next_call - time.time())
-            thex.the_x_dimmed(sense)
+            thex.the_x_vague(sense)
             time.sleep(seconds_to_sleep)
     except (KeyboardInterrupt):
         thex.the_x_in_yellow(sense)
@@ -154,11 +154,15 @@ def main():
     thex.the_x_off(sense)
     sense.low_light = True
     time.sleep(2)
+    thex.the_x_dimmed(sense)
+    time.sleep(2)
     sense.set_imu_config(True, True, False)
     time.sleep(1)
+    sense.get_compass_raw()
+    time.sleep(1)
     sense.get_compass()
-    time.sleep(2)
-    thex.the_x_wiped(sense)
+    time.sleep(1)
+    sense.get_orientation_degrees()
     try:
         print(
             "Example grapicx.io IoT platform\n\n"
@@ -172,18 +176,21 @@ def main():
                                                                "mqtt_client_id = " + mqtt_client_id + "\n"
         )
         connect_mqtt()
-        time.sleep(10)
+        time.sleep(12)
         if (connection_code != 0):
-            pass
-
-        thex.the_x_vague(sense)
-        time.sleep(10)
-        timer_thread = threading.Thread(target=our_loop_in_one_thread)
-        timer_thread.daemon = True
-        timer_thread.start()
-
-        while True:
+            print("Could not connect to MQTT Broker within 12 seconds." +
+                  " Exiting program so that it will be restarted.\n")
+            thex.the_x_in_red(sense)
             time.sleep(10)
+            pass
+        else:
+            print("Starting data collection loop in another thread.\n")
+            timer_thread = threading.Thread(target=our_loop_in_one_thread)
+            timer_thread.daemon = True
+            timer_thread.start()
+
+            while True:
+                time.sleep(10)
     except (KeyboardInterrupt):
         thex.the_x_in_yellow(sense)
         print("KeyboardInterrupt caught in main.")
@@ -198,10 +205,9 @@ def main():
     finally:
         print("Exiting from main.")
         disconnect_mqtt()
-        time.sleep(6)
-        thex.the_x_vague(sense)
-        time.sleep(6)
+        time.sleep(10)
         thex.the_x_off(sense)
+        time.sleep(1)
 
 
 if __name__ == "__main__":
