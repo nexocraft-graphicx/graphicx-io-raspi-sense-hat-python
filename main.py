@@ -11,30 +11,26 @@ import paho.mqtt.client as mqtt
 
 from ambience import ambience
 from ledmatrix import thex
+from configholder import configholder
 
 # ----- Sense Hat -----
 
 sense = SenseHat()
 
+
 # ----- Configuration -----
 
-# Platform, mqqt and device parameters (read form "config.json" if "config_local.json" is not available (.gitignore))
-if (os.path.isfile("config_local.json")):
-    config_file_path = "config_local.json"
-else:
-    config_file_path = "config.json"
+config_data = configholder.get_config_data()
+tenant_identifier = config_data["tenant_identifier"]
+device_identifier = config_data["device_identifier"]
+format_id = config_data["format_id"]
+compression_id = config_data["compression_id"]
+mqtt_broker_host = config_data["mqtt_broker_host"]
+mqtt_broker_port = int(config_data["mqtt_broker_port"])
+mqtt_client_username = config_data["mqtt_client_username"]
+mqtt_client_password = config_data["mqtt_client_password"]
+mqtt_client_id = config_data["mqtt_client_id"]
 
-with open(config_file_path) as config_file:
-    config_data = json.load(config_file)
-    tenant_identifier = config_data["tenant_identifier"]
-    device_identifier = config_data["device_identifier"]
-    format_id = config_data["format_id"]
-    compression_id = config_data["compression_id"]
-    mqtt_broker_host = config_data["mqtt_broker_host"]
-    mqtt_broker_port = int(config_data["mqtt_broker_port"])
-    mqtt_client_username = config_data["mqtt_client_username"]
-    mqtt_client_password = config_data["mqtt_client_password"]
-    mqtt_client_id = config_data["mqtt_client_id"]
 
 # ----- MQTT Client -----
 
@@ -172,8 +168,9 @@ def main():
             "compression_id = " + compression_id + "\n" +
             "mqtt_broker_host = " + mqtt_broker_host + "\n" +
             "mqtt_broker_port = " + str(mqtt_broker_port) + "\n" +
-            "mqtt_client_username = " + mqtt_client_username + "\n"
-                                                               "mqtt_client_id = " + mqtt_client_id + "\n"
+            "mqtt_client_username = " + mqtt_client_username + "\n" +
+            "mqtt_client_id = " + mqtt_client_id + "\n" +
+            "use_led_matrix = " + use_led_matrix + "\n"
         )
         connect_mqtt()
         time.sleep(12)

@@ -1,7 +1,19 @@
+# -*- coding: utf-8 -*-
 from sense_hat import SenseHat
 
 import time
 import numpy as np
+
+from configholder import configholder
+
+
+# ----- Configuration -----
+
+config_data = configholder.get_config_data()
+use_led_matrix = config_data["use_led_matrix"] == 'True'
+
+
+# ----- The X -----
 
 npcolor2 = np.array([0, 208, 193])
 npcolor3 = np.array([130, 141, 152])
@@ -30,7 +42,6 @@ red = npred.tolist()
 yellow = npyellow.tolist()
 
 is_red = False
-use_ledmatrix = False
 
 
 def the_x_lit(sense):
@@ -69,7 +80,7 @@ def internal_guarded_draw(sense, o, X):
     # time.sleep(0.1)
     # orientation = sense.get_orientation_degrees()
     # print("p: {pitch}, r: {roll}, y: {yaw}".format(**orientation))
-    if (use_ledmatrix):
+    if (use_led_matrix):
         internal_draw(sense, o, X)
     else:
         sense.clear()
@@ -90,7 +101,7 @@ def internal_draw(sense, o, X):
 
 
 def the_x_wiped(sense):
-    if (is_red == False and use_ledmatrix):
+    if (is_red == False and use_led_matrix):
         sense.clear(dark)
 
 

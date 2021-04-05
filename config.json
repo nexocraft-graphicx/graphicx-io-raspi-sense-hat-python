@@ -7,5 +7,6 @@
     "mqtt_broker_port" : "<<insert mqtt_broker_port>>",
     "mqtt_client_username" : "<<insert mqtt_client_username>>",
     "mqtt_client_password" : "<<insert mqtt_client_password>>",
-    "mqtt_client_id" : "<<insert mqtt_client_id>>"
+    "mqtt_client_id" : "<<insert mqtt_client_id>>",
+    "use_led_matrix" : "<<insert use_led_matrix>>"
 }
