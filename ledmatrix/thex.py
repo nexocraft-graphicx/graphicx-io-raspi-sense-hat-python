@@ -9,7 +9,7 @@ from configholder import configholder
 # ----- Configuration -----
 
 config_data = configholder.get_config_data()
-use_led_matrix = config_data["use_led_matrix"] == 'True'
+use_led_matrix = configholder.get_use_led_matrix()
 
 
 # ----- The X -----

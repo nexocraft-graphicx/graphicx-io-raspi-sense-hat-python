@@ -15,3 +15,8 @@ with open(config_file_path) as config_file:
 
 def get_config_data():
     return config_data
+
+
+def get_use_led_matrix():
+    use_led_matrix_config_value = config_data["use_led_matrix"]
+    return (use_led_matrix_config_value == 'True' or use_led_matrix_config_value == 'true')
