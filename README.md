@@ -206,7 +206,7 @@ If you are not yet familiar with these parameters please read the [Quickstart Gu
 
 The MQTT Client ID is usually a unique ID per IoT Device in case there is only one MQTT Client on the Device.
 
-If use_led_matrix is the string 'True' the program will draw an elegant X on the LED-Matrix. The color of the X depends on the status. It is neutral during start of the program including initially connecting to the MQTT Broker. It is a highlight color during taking and sending measurements. It is yellow on exit due to an interrupt. It is red when there is a failure.
+If use_led_matrix is the string 'true' or 'True' the program will draw an elegant X on the LED-Matrix. The color of the X depends on the current status. It is neutral during start of the program including initially connecting to the MQTT Broker. It is a highlight color during taking and sending measurements. It is yellow on exit due to an interrupt. It is red when there is a failure.
 
 Note: If the configuration file does not yet exist, it will be created. If it already exists, each current value will be presented and you will be asked if you want to keep or change it. 
 
