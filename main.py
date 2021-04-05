@@ -30,6 +30,7 @@ mqtt_broker_port = int(config_data["mqtt_broker_port"])
 mqtt_client_username = config_data["mqtt_client_username"]
 mqtt_client_password = config_data["mqtt_client_password"]
 mqtt_client_id = config_data["mqtt_client_id"]
+use_led_matrix = config_data["use_led_matrix"]
 
 
 # ----- MQTT Client -----

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from sense_hat import SenseHat
 
-import time
 import numpy as np
 
 from configholder import configholder
@@ -60,6 +59,7 @@ def the_x_vague(sense):
 
 
 def the_x_in_red(sense):
+    global is_red
     internal_guarded_draw(sense, dark, red)
     is_red = True
 
@@ -69,7 +69,7 @@ def the_x_in_yellow(sense):
         internal_guarded_draw(sense, dark, yellow)
 
 
-def internal_guarded_draw(sense, o, X):
+def internal_guarded_draw(sense, o, x):
     # here we tried to make drawing dependent on the orientation
     # time.sleep(0.1)
     # compassraw = sense.get_compass_raw()
@@ -81,21 +81,21 @@ def internal_guarded_draw(sense, o, X):
     # orientation = sense.get_orientation_degrees()
     # print("p: {pitch}, r: {roll}, y: {yaw}".format(**orientation))
     if (use_led_matrix):
-        internal_draw(sense, o, X)
+        internal_draw(sense, o, x)
     else:
         sense.clear()
 
 
-def internal_draw(sense, o, X):
+def internal_draw(sense, o, x):
     x = [
         o, o, o, o, o, o, o, o,
-        o, o, o, o, o, o, X, X,
-        o, X, X, o, o, X, X, o,
-        o, o, X, X, X, X, o, o,
-        o, o, o, X, X, o, o, o,
-        o, o, X, X, X, X, o, o,
-        o, X, X, o, o, X, X, o,
-        X, X, o, o, o, o, o, o
+        o, o, o, o, o, o, x, x,
+        o, x, x, o, o, x, x, o,
+        o, o, x, x, x, x, o, o,
+        o, o, o, x, x, o, o, o,
+        o, o, x, x, x, x, o, o,
+        o, x, x, o, o, x, x, o,
+        x, x, o, o, o, o, o, o
     ]
     sense.set_pixels(x)
 
