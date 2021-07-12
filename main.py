@@ -35,6 +35,7 @@ use_led_matrix = config_data["use_led_matrix"]
 
 # ----- MQTT Client -----
 
+# we set the MQTT v3.1.1 clean session flag to true since this MQTT Client will only publish
 mqttc = mqtt.Client(mqtt_client_id, True, None, mqtt.MQTTv311, "tcp")
 # mqttc = mqtt.Client("raspidemo1_mqtt_client", None, None, mqtt.MQTTv5, "tcp")
 
