@@ -26,6 +26,7 @@ def send_measurements(sense, connection_status, connection_code, mqttc, tenant_i
         #            + " Humidity " + (str(relative_humidity_value))
         #            + " Pressure " + (str(pressure_value))
         #        )
+        # we use MQTT 3.1.1 QoS 1 and we set the MQTT 3.1.1 retained flag to false
         mqttc.publish(topic, payload, 1, False)
     else:
         print(
@@ -68,7 +69,7 @@ def create_json_payload_dict(sense, time_epochmillis, temperature_value, relativ
         payload_dict = {'data': data_dict}
         payload_json = json.dumps(payload_dict)
         # if this would not use the simple default payload format (see graphicx.io quickstart)
-        # the following would be done to include a format_if and a compression_id
+        # the following would be done to include a format_id and a compression_id
         # moreover with MQTT v5 these would become custom headers on the MQTT message
         #        payload = bytes.fromhex(format_id) + bytes.fromhex(compression_id) + bytearray(payload_json, "utf8")
         payload = bytearray(payload_json, "utf8")
