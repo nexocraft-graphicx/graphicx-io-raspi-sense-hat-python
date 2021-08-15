@@ -193,7 +193,7 @@ python config.py
 
 The little script (config.py) will ask you for following parameters and adjusts the configuration file:
 
-- Tenant ID
+- MQTT Topic Prefix
 - Device Identifier
 - MQTT Broker Host
 - MQTT Broker Port
