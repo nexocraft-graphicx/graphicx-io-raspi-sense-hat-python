@@ -17,7 +17,7 @@ def enter_credential(key, current):
 
 
 def enter_credentials(config):
-    config["mqtt_client_prefix"] = enter_credential("mqtt_client_prefix", config["mqtt_client_prefix"])
+    config["mqtt_topic_prefix"] = enter_credential("mqtt_topic_prefix", config["mqtt_topic_prefix"])
     config["device_identifier"] = enter_credential("device_identifier", config["device_identifier"])
     config["mqtt_broker_host"] = enter_credential("mqtt_broker_host", config["mqtt_broker_host"])
     config["mqtt_broker_port"] = enter_credential("mqtt_broker_port", config["mqtt_broker_port"])
@@ -36,7 +36,7 @@ def read_config():
         config_file_path = "config.json"
     with open(config_file_path) as config_file:
         config_data = json.load(config_file)
-        config["mqtt_client_prefix"] = config_data["mqtt_client_prefix"]
+        config["mqtt_topic_prefix"] = config_data["mqtt_topic_prefix"]
         config["device_identifier"] = config_data["device_identifier"]
         config["format_id"] = config_data["format_id"]
         config["compression_id"] = config_data["compression_id"]
@@ -51,7 +51,7 @@ def read_config():
 
 def write_config(config):
     data = {}
-    data['mqtt_client_prefix'] = config["mqtt_client_prefix"]
+    data['mqtt_topic_prefix'] = config["mqtt_topic_prefix"]
     data['device_identifier'] = config["device_identifier"]
     data['format_id'] = "17"
     data['compression_id'] = "02"
@@ -67,7 +67,7 @@ def write_config(config):
 
 def show_config(config):
     print(
-        "mqtt_client_prefix = " + config["mqtt_client_prefix"] + "\n" +
+        "mqtt_topic_prefix = " + config["mqtt_topic_prefix"] + "\n" +
         "device_identifier = " + config["device_identifier"] + "\n" +
         "mqtt_broker_host = " + config["mqtt_broker_host"] + "\n" +
         "mqtt_broker_port = " + config["mqtt_broker_port"] + "\n" +
