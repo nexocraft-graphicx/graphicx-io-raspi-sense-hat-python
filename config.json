@@ -1,5 +1,5 @@
 {
-    "mqtt_client_prefix" : "<<insert mqtt_client_prefix>>",
+    "mqtt_topic_prefix" : "<<insert mqtt_topic_prefix>>",
     "device_identifier" : "<<insert device_identifier>>",
     "format_id" : "<<insert format_id>>", 
     "compression_id" : "<<insert compression_id>>",                                     
