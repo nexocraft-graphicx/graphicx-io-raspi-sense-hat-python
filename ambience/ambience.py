@@ -2,7 +2,7 @@ import json
 import time
 from ledmatrix import thex
 
-def take_and_send_measurements(sense, connection_status, connection_code, mqttc, tenant_identifier, device_identifier):
+def take_and_send_measurements(sense, connection_status, connection_code, mqttc, mqtt_client_prefix, device_identifier):
     time_epochmillis = int(time.time() * 1000)
     # see https://pythonhosted.org/sense-hat/api/#environmental-sensors
     # degrees Celsius
@@ -14,12 +14,12 @@ def take_and_send_measurements(sense, connection_status, connection_code, mqttc,
     # Millibars
     pressure_value = sense.get_pressure()
     #    pressure_value = 1111.11
-    send_measurements(sense, connection_status, connection_code, mqttc, tenant_identifier, device_identifier, time_epochmillis, temperature_value, relative_humidity_value, pressure_value)
+    send_measurements(sense, connection_status, connection_code, mqttc, mqtt_client_prefix, device_identifier, time_epochmillis, temperature_value, relative_humidity_value, pressure_value)
 
 
-def send_measurements(sense, connection_status, connection_code, mqttc, tenant_identifier, device_identifier, time_epochmillis, temperature_value, relative_humidity_value, pressure_value):
+def send_measurements(sense, connection_status, connection_code, mqttc, mqtt_client_prefix, device_identifier, time_epochmillis, temperature_value, relative_humidity_value, pressure_value):
     if (connection_code == 0):
-        topic = create_topic_name(tenant_identifier, device_identifier)
+        topic = create_topic_name(mqtt_client_prefix, device_identifier)
         payload = create_json_payload_dict(sense, time_epochmillis, temperature_value, relative_humidity_value, pressure_value)
         #        print(
         #            "\nTemperature " + (str(temperature_value))
@@ -37,9 +37,9 @@ def send_measurements(sense, connection_status, connection_code, mqttc, tenant_i
         )
 
 
-def create_topic_name(tenant_identifier, device_identifier):
+def create_topic_name(mqtt_client_prefix, device_identifier):
     topic = (
-            "tenant/" + tenant_identifier + "/ts/in/" + device_identifier
+            "" + mqtt_client_prefix + "/ts/in/" + device_identifier
     )
     #    print("\nMQTT topic: " + topic)
     return topic
