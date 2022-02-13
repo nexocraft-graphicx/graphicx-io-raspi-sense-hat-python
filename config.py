@@ -19,6 +19,7 @@ def enter_credential(key, current):
 def enter_credentials(config):
     config["mqtt_topic_prefix"] = enter_credential("mqtt_topic_prefix", config["mqtt_topic_prefix"])
     config["device_identifier"] = enter_credential("device_identifier", config["device_identifier"])
+    config["device_identifier_2"] = enter_credential("device_identifier_2", config["device_identifier_2"])
     config["mqtt_broker_host"] = enter_credential("mqtt_broker_host", config["mqtt_broker_host"])
     config["mqtt_broker_port"] = enter_credential("mqtt_broker_port", config["mqtt_broker_port"])
     config["mqtt_client_username"] = enter_credential("mqtt_client_username", config["mqtt_client_username"])
@@ -38,6 +39,7 @@ def read_config():
         config_data = json.load(config_file)
         config["mqtt_topic_prefix"] = config_data["mqtt_topic_prefix"]
         config["device_identifier"] = config_data["device_identifier"]
+        config["device_identifier_2"] = config_data["device_identifier_2"]
         config["format_id"] = config_data["format_id"]
         config["compression_id"] = config_data["compression_id"]
         config["mqtt_broker_host"] = config_data["mqtt_broker_host"]
@@ -53,6 +55,7 @@ def write_config(config):
     data = {}
     data['mqtt_topic_prefix'] = config["mqtt_topic_prefix"]
     data['device_identifier'] = config["device_identifier"]
+    data['device_identifier_2'] = config["device_identifier_2"]
     data['format_id'] = "17"
     data['compression_id'] = "02"
     data['mqtt_broker_host'] = config["mqtt_broker_host"]
@@ -69,6 +72,7 @@ def show_config(config):
     print(
         "mqtt_topic_prefix = " + config["mqtt_topic_prefix"] + "\n" +
         "device_identifier = " + config["device_identifier"] + "\n" +
+        "device_identifier_2 = " + config["device_identifier_2"] + "\n" +
         "mqtt_broker_host = " + config["mqtt_broker_host"] + "\n" +
         "mqtt_broker_port = " + config["mqtt_broker_port"] + "\n" +
         "mqtt_client_username = " + config["mqtt_client_username"] + "\n" +

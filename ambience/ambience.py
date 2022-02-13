@@ -2,7 +2,8 @@ import json
 import time
 from ledmatrix import thex
 
-def take_and_send_measurements(sense, connection_status, connection_code, mqttc, mqtt_topic_prefix, device_identifier):
+
+def take_and_send_measurements(sense, connection_status, connection_code, mqttc, mqtt_topic_prefix, device_identifier, device_identifier_2):
     time_epochmillis = int(time.time() * 1000)
     # see https://pythonhosted.org/sense-hat/api/#environmental-sensors
     # degrees Celsius
@@ -14,20 +15,12 @@ def take_and_send_measurements(sense, connection_status, connection_code, mqttc,
     # Millibars
     pressure_value = sense.get_pressure()
     #    pressure_value = 1111.11
-    send_measurements(sense, connection_status, connection_code, mqttc, mqtt_topic_prefix, device_identifier, time_epochmillis, temperature_value, relative_humidity_value, pressure_value)
-
-
-def send_measurements(sense, connection_status, connection_code, mqttc, mqtt_topic_prefix, device_identifier, time_epochmillis, temperature_value, relative_humidity_value, pressure_value):
     if (connection_code == 0):
-        topic = create_topic_name(mqtt_topic_prefix, device_identifier)
-        payload = create_json_payload_dict(sense, time_epochmillis, temperature_value, relative_humidity_value, pressure_value)
-        #        print(
-        #            "\nTemperature " + (str(temperature_value))
-        #            + " Humidity " + (str(relative_humidity_value))
-        #            + " Pressure " + (str(pressure_value))
-        #        )
-        # we use MQTT 3.1.1 QoS 1 and we set the MQTT 3.1.1 retained flag to false
-        mqttc.publish(topic, payload, 1, False)
+        payload = create_payload(sense, time_epochmillis, temperature_value, relative_humidity_value, pressure_value)
+        # device 1
+        publish(mqttc, mqtt_topic_prefix, device_identifier, payload)
+        # device 2
+        publish(mqttc, mqtt_topic_prefix, device_identifier_2, payload)
     else:
         print(
             "\nMQTT Server disconnected, can´t send data: " + connection_status[connection_code]
@@ -35,6 +28,17 @@ def send_measurements(sense, connection_status, connection_code, mqttc, mqtt_top
             + " Humidity " + (str(relative_humidity_value))
             + " Pressure " + (str(pressure_value))
         )
+
+
+def create_payload(sense, time_epochmillis, temperature_value, relative_humidity_value, pressure_value):
+    payload = create_json_payload_dict(sense, time_epochmillis, temperature_value, relative_humidity_value, pressure_value)
+    return payload
+
+
+def publish(mqttc, mqtt_topic_prefix, device_identifier, payload):
+    topic = create_topic_name(mqtt_topic_prefix, device_identifier)
+    # we use MQTT 3.1.1 QoS 1 and we set the MQTT 3.1.1 retained flag to false
+    mqttc.publish(topic, payload, 1, False)
 
 
 def create_topic_name(mqtt_topic_prefix, device_identifier):

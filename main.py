@@ -23,6 +23,7 @@ sense = SenseHat()
 config_data = configholder.get_config_data()
 mqtt_topic_prefix = config_data["mqtt_topic_prefix"]
 device_identifier = config_data["device_identifier"]
+device_identifier_2 = config_data["device_identifier_2"]
 format_id = config_data["format_id"]
 compression_id = config_data["compression_id"]
 mqtt_broker_host = config_data["mqtt_broker_host"]
@@ -121,7 +122,7 @@ def our_loop_in_one_thread():
         while True:
             thex.the_x_lit(sense)
             ambience.take_and_send_measurements(sense, connection_status, connection_code, mqttc, mqtt_topic_prefix,
-                                                device_identifier)
+                                                device_identifier, device_identifier_2)
             time.sleep(5)
             # next call in 30 seconds
             next_call = next_call + 30
@@ -166,6 +167,7 @@ def main():
             "Example grapicx.io IoT platform\n\n"
             "mqtt_topic_prefix = " + mqtt_topic_prefix + "\n" +
             "device_identifier = " + device_identifier + "\n" +
+            "device_identifier_2 = " + device_identifier_2 + "\n" +
             "format_id = " + format_id + "\n" +
             "compression_id = " + compression_id + "\n" +
             "mqtt_broker_host = " + mqtt_broker_host + "\n" +

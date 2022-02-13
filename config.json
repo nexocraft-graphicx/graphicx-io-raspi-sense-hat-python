@@ -1,7 +1,8 @@
 {
     "mqtt_topic_prefix" : "<<insert mqtt_topic_prefix>>",
     "device_identifier" : "<<insert device_identifier>>",
-    "format_id" : "<<insert format_id>>", 
+    "device_identifier_2" : "<<insert device_identifier_2>>",
+    "format_id" : "<<insert format_id>>",
     "compression_id" : "<<insert compression_id>>",                                     
     "mqtt_broker_host" : "<<insert mqtt_broker_host>>",
     "mqtt_broker_port" : "<<insert mqtt_broker_port>>",
