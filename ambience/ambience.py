@@ -19,7 +19,6 @@ def take_and_send_measurements(sense, connection_status, connection_code, mqttc,
         payload = create_payload(sense, time_epochmillis, temperature_value, relative_humidity_value, pressure_value)
         # device 1
         publish(mqttc, mqtt_topic_prefix, device_identifier, payload)
-        time.sleep(5)
         # device 2
         publish(mqttc, mqtt_topic_prefix, device_identifier_2, payload)
     else:
