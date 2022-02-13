@@ -72,7 +72,7 @@ There are numerous guides including the ones at the [official Raspberry Pi site]
 3. After the write and verify process has finished remove the mini sd-card from the reader or USB port (this is important for the next step)
 
 4. Insert the sd-card again in the reader or USB port. A volume named `boot` will appear in your file explorer. Please copy 
- `ssh` and `wpa_supplicant.conf` from `.\graphicx-io-raspi-sense-hat-python\raspberry_pi_headlessin` the `root` directory. The following picture illustrates this step under Windows 10:
+ `ssh` and `wpa_supplicant.conf` from `.\graphicx-io-raspi-sense-hat-python-2\raspberry_pi_headlessin` the `root` directory. The following picture illustrates this step under Windows 10:
  ![rasp_6](images/rasp_6.JPG)
 
 5. Open `wpa_supplicant.conf` and adjust the credentials (SSID and password) for the Wifi you are using:
@@ -158,13 +158,13 @@ As a next step all necessary packages and files will get installed by entering:
     Installs Pip for python.
 
 4. ```
-    git clone https://github.com/recogizer-analytics/graphicx-io-raspi-sense-hat-python.git
+    git clone https://github.com/recogizer-analytics/graphicx-io-raspi-sense-hat-python.git /graphicx-io-raspi-sense-hat-python-2
     ```
     
     Since we have installed [Git](https://git-scm.com/downloads) on our Raspberry Pi we simply can clone the repository.
 
 5. ```
-    cd graphicx-io-raspi-sense-hat-python
+    cd graphicx-io-raspi-sense-hat-python-2
     ```
     
     Changes the directory to the cloned repository.
