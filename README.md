@@ -230,26 +230,26 @@ The script will start to connect and send data.
 
 This here is based on systemd and it can be compared to running a container in Docker.
 
-We prepared for you the file ./runasservice/senddataviamqtt.service which you may consider adjusting and copying as mentioned in [this official article](https://www.raspberrypi.org/documentation/linux/usage/systemd.md):
+We prepared for you the file ./runasservice/senddataviamqtt2.service which you may consider adjusting and copying as mentioned in [this official article](https://www.raspberrypi.org/documentation/linux/usage/systemd.md):
 
-`sudo cp senddataviamqtt.service /etc/systemd/system/senddataviamqtt.service`
+`sudo cp senddataviamqtt2.service /etc/systemd/system/senddataviamqtt2.service`
 
 Once copied, you can attempt to start the service using the following command:
 
-`sudo systemctl start senddataviamqtt.service`
+`sudo systemctl start senddataviamqtt2.service`
 
 See its status with:
 
-`systemctl status senddataviamqtt.service`
+`systemctl status senddataviamqtt2.service`
 
 See not only a part, but all of its available output, so to say its logging output that it writes to stdout and strerr:
 
-`journalctl -u senddataviamqtt.service`
+`journalctl -u senddataviamqtt2.service`
 
 Stop it with:
 
-`sudo systemctl stop senddataviamqtt.service`
+`sudo systemctl stop senddataviamqtt2.service`
 
 When this has worked and you are happy, you can have it start automatically on reboot by using this command:
 
-`sudo systemctl enable senddataviamqtt.service`
+`sudo systemctl enable senddataviamqtt2.service`
