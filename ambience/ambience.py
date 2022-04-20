@@ -7,7 +7,9 @@ def take_and_send_measurements(sense, connection_status, connection_code, mqttc,
     time_epochmillis = int(time.time() * 1000)
     # see https://pythonhosted.org/sense-hat/api/#environmental-sensors
     # degrees Celsius
-    temperature_value = sense.get_temperature()
+    temperature_value_measured = sense.get_temperature()
+    # tweek the temperature to make a room temperature out of a RasPi case temperature
+    temperature_value = (4.0 * temperature_value_measured) - 140.0
     #    temperature_value = 22.22
     # RH percentage
     relative_humidity_value = sense.get_humidity()
