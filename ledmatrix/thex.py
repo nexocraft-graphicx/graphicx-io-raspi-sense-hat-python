@@ -18,27 +18,31 @@ npcolor2 = np.array([0, 208, 193])
 npcolor3 = np.array([130, 141, 152])
 npcolor4 = np.array([79, 91, 102])
 npcolor5 = np.array([59, 71, 82])
+# on the LED matrix [10, 96, 192] turns out lit-white-blue-violet like near the lit nodes on our light-wall 2022
+npcolor6 = np.array([10, 96, 192])
+# on the LED matrix [10, 56, 128] turns out almost like [10, 96, 192] but dimmer
+npcolor7 = np.array([10, 56, 128])
 npcolorred = np.array([130, 41, 52])
 npcoloryellow = np.array([130, 141, 52])
 
-nplit = (npcolor2 - 20).clip(min=0)
+nplit = npcolor6
+# nplit = (npcolor2 - 20).clip(min=0)
+
 npdimmed = (npcolor3 - 10).clip(min=10)
 # npdimmed = npcolor3
-npvague = (npcolor4 - 10).clip(min=10)
+
+npvague = npcolor7
+# npvague = (npcolor4 - 10).clip(min=10)
 # npvague = npcolor4
+
+npdark = np.array([0, 0, 0])
 # npdark = np.subtract(npcolor5, np.array([20, 24, 30])).clip(min=10)
 # npdark = (npcolor5 - 20).clip(min=10)
 # npdark = np.array([12, 10, 12])
-npdark = np.array([0, 0, 0])
-npred = npcolorred
-npyellow = npcoloryellow
 
-lit = nplit.tolist()
-dimmed = npdimmed.tolist()
-vague = npvague.tolist()
-dark = npdark.tolist()
-red = npred.tolist()
-yellow = npyellow.tolist()
+npred = npcolorred
+
+npyellow = npcoloryellow
 
 is_red = False
 
