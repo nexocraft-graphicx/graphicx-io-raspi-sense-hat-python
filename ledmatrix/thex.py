@@ -44,6 +44,13 @@ npred = npcolorred
 
 npyellow = npcoloryellow
 
+lit = nplit.tolist()
+dimmed = npdimmed.tolist()
+vague = npvague.tolist()
+dark = npdark.tolist()
+red = npred.tolist()
+yellow = npyellow.tolist()
+
 is_red = False
 
 
