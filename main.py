@@ -121,7 +121,12 @@ def our_loop_in_one_thread():
         sense.set_imu_config(True, True, False)
         while True:
             thex.the_x_lit(sense)
-            ambience.take_and_send_measurements(sense, connection_status, connection_code, mqttc, mqtt_topic_prefix,
+            ambience.take_and_send_measurements(sense,
+                                                connection_status,
+                                                connection_code,
+                                                mqttc,
+                                                mqtt_topic,
+                                                mqtt_topic_prefix,
                                                 device_identifier)
             time.sleep(5)
             # next call in 30 seconds
