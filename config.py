@@ -24,6 +24,7 @@ def enter_credentials(config):
     config["mqtt_client_username"] = enter_credential("mqtt_client_username", config["mqtt_client_username"])
     config["mqtt_client_password"] = enter_credential("mqtt_client_password", config["mqtt_client_password"])
     config["mqtt_client_id"] = enter_credential("mqtt_client_id", config["mqtt_client_id"])
+    config["mqtt_topic"] = enter_credential("mqtt_topic", config["mqtt_topic"])
     config["use_led_matrix"] = enter_credential("use_led_matrix", config["use_led_matrix"])
     return config
 
@@ -45,6 +46,7 @@ def read_config():
         config["mqtt_client_username"] = config_data["mqtt_client_username"]
         config["mqtt_client_password"] = config_data["mqtt_client_password"]
         config["mqtt_client_id"] = config_data["mqtt_client_id"]
+        config["mqtt_topic"] = config_data["mqtt_topic"]
         config["use_led_matrix"] = config_data["use_led_matrix"]
     return config
 
@@ -60,6 +62,7 @@ def write_config(config):
     data['mqtt_client_username'] = config["mqtt_client_username"]
     data['mqtt_client_password'] = config["mqtt_client_password"]
     data['mqtt_client_id'] = config["mqtt_client_id"]
+    data['mqtt_topic'] = config["mqtt_topic"]
     data['use_led_matrix'] = config["use_led_matrix"]
     with open("config_local.json", "w") as write_file:
         json.dump(data, write_file)
@@ -73,6 +76,7 @@ def show_config(config):
         "mqtt_broker_port = " + config["mqtt_broker_port"] + "\n" +
         "mqtt_client_username = " + config["mqtt_client_username"] + "\n" +
         "mqtt_client_id = " + config["mqtt_client_id"] + "\n" +
+        "mqtt_topic = " + config["mqtt_topic"] + "\n" +
         "use_led_matrix = " + config["use_led_matrix"] + "\n"
     )
 
