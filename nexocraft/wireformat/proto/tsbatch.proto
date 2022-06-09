@@ -1,0 +1,100 @@
+syntax = "proto3";
+package com.nexocraft.ts.batch;
+
+import "google/protobuf/timestamp.proto";
+
+/*
+    protobuf does not support repeated (or other) attributes in
+    oneof fields, so we end up with this message definition
+*/
+
+message NumericValueAtTime
+{
+    google.protobuf.Timestamp timestamp = 1;
+    float value = 2;
+}
+
+message StringValueAtTime
+{
+    google.protobuf.Timestamp timestamp = 1;
+    string value = 2;
+}
+
+message BinaryValueAtTime
+{
+    google.protobuf.Timestamp timestamp = 1;
+    bytes value = 2;
+}
+
+message JsonValueAtTime
+{
+    google.protobuf.Timestamp timestamp = 1;
+    string value = 2;
+}
+
+message NumericValues
+{
+    repeated NumericValueAtTime values = 1;
+}
+
+message StringValues
+{
+    repeated StringValueAtTime values = 1;
+}
+
+message BinaryValues
+{
+    repeated BinaryValues values = 1;
+}
+
+message JsonValues
+{
+    repeated JsonValueAtTime values = 1;
+}
+
+enum DataType {
+    NUMERIC = 0;
+    STRING = 1;
+    JSON = 2;
+    BINARY = 3;
+}
+
+message Timeseries
+{
+    string group = 1;
+    string source = 2;
+    oneof values {
+        NumericValues v_numeric = 3;
+        StringValues v_string = 4;
+        BinaryValues v_binary = 5;
+        JsonValues v_json = 6;
+    }
+    DataType dataType = 7;
+    string mimeType = 8;
+    enum DuplicateTimestampStrategy {
+        RAISE = 0;
+        IGNORE = 1;
+        OVERWRITE = 2;
+    }
+    DuplicateTimestampStrategy duplicateTimestampStrategy = 9;
+    int32 unit = 10;
+    string name = 11;
+}
+
+message Batch
+{
+    repeated Timeseries timeseries = 1;
+}
+
+message Frame
+{
+    enum ContentType
+    {
+        ZSTD_COMPRESSED_BATCH = 0;
+        ZSTD_COMPRESSED_TIMESERIES = 1;
+        // can add more types here
+    }
+    ContentType contentType = 1;
+    bytes content = 2;
+    string messageId = 3;
+}

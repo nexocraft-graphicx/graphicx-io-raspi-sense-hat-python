@@ -193,18 +193,17 @@ python config.py
 
 The little script (config.py) will ask you for following parameters and adjusts the configuration file:
 
-- MQTT Topic Prefix
-- Device Identifier
+- MQTT Topic Prefix (deprecated)
+- Device Identifier (deprecated)
 - MQTT Broker Host
 - MQTT Broker Port
 - MQTT username
 - MQTT password
 - MQTT Client ID
+- MQTT Topic (new)
 - Use Led-Matrix
 
-If you are not yet familiar with these parameters please read the [Quickstart Guide of graphicx.io](https://helpcenter.graphicx.io/en/support/solutions/79000057338).
-
-The MQTT Client ID is usually a unique ID per IoT Device in case there is only one MQTT Client on the Device.
+If you are not yet familiar with these parameters please read the [Quickstart Guide of graphicx.io](https://helpcenter.graphicx.io/en/support/solutions/79000057338) (deprecated).
 
 If use_led_matrix is the string 'true' or 'True' the program will draw an elegant X on the LED-Matrix. The color of the X depends on the current status. It is neutral during start of the program including initially connecting to the MQTT Broker. It is a highlight color during taking and sending measurements. It is yellow on exit due to an interrupt. It is red when there is a failure.
 
